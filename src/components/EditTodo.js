@@ -19,6 +19,7 @@ class EditTodo extends Component {
     btnEditClick = () => {
         let item = this.state;
         this.props.btnEditClick(item);
+        this.props.toggleEditDialog();
     }
 
     isChanged = (event) => {

@@ -118,3 +118,7 @@ body {
 .todos-list tr, .todos-list td{
   vertical-align: middle;
 }
+
+tr.completed td {
+  text-decoration: line-through;
+}

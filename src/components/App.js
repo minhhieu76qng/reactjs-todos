@@ -16,19 +16,22 @@ class App extends Component {
 				id: '1',
 				job: 'Mua com',
 				priority: 'hight',
-				note: 'Hoan thanh truoc 5h chieu'
+				note: 'Hoan thanh truoc 5h chieu',
+				completed : false
 			},
 			{
 				id: '2',
 				job: 'Di choi',
 				priority: 'low',
-				note: ''
+				note: '',
+				completed : true
 			},
 			{
 				id: '3',
 				job: 'Di hoc',
 				priority: 'medium',
-				note: ''
+				note: '',
+				completed : false
 			}],
 
 			isAddTodo: false,
@@ -68,7 +71,6 @@ class App extends Component {
 		this.state.todos.map((value, index) => {
 			if (value.id === this.state.editItemId) {
 				item = value;
-				return;
 			}
 		})
 
@@ -93,6 +95,7 @@ class App extends Component {
 	}
 
 	getEditData = (item) => {
+		// gui du lieu ve server
 		console.log(item);
 
 		let arrayData = [...this.state.todos];
@@ -114,10 +117,28 @@ class App extends Component {
 	// ========================== REMOVE TODO =============================
 
 	btnRemoveClick = (id) => {
+		// gui du lieu ve server
 		this.setState({
-			todos: this.state.todos.filter((value) => value.id != id)
+			todos: this.state.todos.filter((value) => value.id !== id)
 		})
-		// this.props.btnRemoveClick(id);
+	}
+
+	// ======================= COMPLETED TODO ===========================
+	todoClick = (id) => {
+		console.log(id);
+
+		let arrayData = [...this.state.todos];
+
+		arrayData.map((value, key) => {
+			if (value.id === id)
+			{
+				value.completed = !value.completed;
+			}
+		});
+
+		this.setState({
+			todos : arrayData
+		})
 	}
 
 	// =============================== RENDER ===========================
@@ -137,7 +158,7 @@ class App extends Component {
 
 					{/* comp todos list */}
 					<TodoList data={this.state.todos} btnEditClick={(id) => this.btnEditClick(id)}
-						btnRemoveClick={(id) => this.btnRemoveClick(id)} />
+						btnRemoveClick={(id) => this.btnRemoveClick(id)} todoClick={(id) => this.todoClick(id)}/>
 
 					{
 						this.renderDialogAdd()

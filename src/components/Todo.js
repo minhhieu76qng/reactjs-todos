@@ -2,18 +2,27 @@ import React, { Component } from 'react';
 
 class Todo extends Component {
 
-    btnEditClick = () => {
+    btnEditClick = (event) => {
+        event.stopPropagation();
         let id = this.props.data.id;
         this.props.btnEditClick(id);
     }
 
-    btnRemoveClick = () => {
+    btnRemoveClick = (event) => {
+        event.stopPropagation();
         let id = this.props.data.id;
         this.props.btnRemoveClick(id);
     }
+
+    todoClick = () => {
+        let id = this.props.data.id;
+        this.props.todoClick(id);
+    }
+
     render() {
+        console.log(this.props.data);
         return (
-            <tr>
+            <tr onClick={() => this.todoClick()} className={this.props.data.completed === true ? "completed" : ""}>
                 <td>{this.props.index + 1}</td>
                 <td>{this.props.data.job}</td>
                 <td>{this.props.data.note}</td>
@@ -22,10 +31,13 @@ class Todo extends Component {
                 </td>
                 <td>
                     <div className="form-group mb-0">
-                        <button className="btn btn-warning mr-2" title="Edit this todo" onClick={() => this.btnEditClick()}>
+                        {
+                            this.props.data.completed === false ? (<button className="btn btn-warning mr-2" title="Edit this todo" onClick={(event) => this.btnEditClick(event)}>
                             <i className="fa fa-pencil-square" aria-hidden="true"></i>
-                        </button>
-                        <button className="btn btn-danger" title="Remove this todo" onClick={() => this.btnRemoveClick()}>
+                        </button>) : null
+                        }
+
+                        <button className="btn btn-danger" title="Remove this todo" onClick={(event) => this.btnRemoveClick(event)}>
                             <i className="fa fa-trash" aria-hidden="true"></i>
                         </button>
                     </div>
