@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/reactjs-todos/static/js/runtime~main.e0bd44b9.js"
   },
   {
-    "revision": "a34c9c137d6d20b0df3e",
+    "revision": "eccf45c34b7eafe5a0f7",
     "url": "/reactjs-todos/static/js/main.f9f4b0ba.chunk.js"
   },
   {
@@ -12,11 +12,11 @@ self.__precacheManifest = [
     "url": "/reactjs-todos/static/js/2.3bcea387.chunk.js"
   },
   {
-    "revision": "a34c9c137d6d20b0df3e",
-    "url": "/reactjs-todos/static/css/main.9ba5a327.chunk.css"
+    "revision": "eccf45c34b7eafe5a0f7",
+    "url": "/reactjs-todos/static/css/main.f774d5d4.chunk.css"
   },
   {
-    "revision": "9fb251f168961ca61cc4329b998c479a",
+    "revision": "a1f8198825663b057a632ae881bca726",
     "url": "/reactjs-todos/index.html"
   }
 ];
