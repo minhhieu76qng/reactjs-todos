@@ -9,6 +9,7 @@ class EditTodo extends Component {
             job : this.props.data.job,
             note : this.props.data.note,
             priority : this.props.data.priority,
+            completed : this.props.data.completed
         }
     }
     

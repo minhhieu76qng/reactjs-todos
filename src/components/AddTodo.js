@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {database} from './Firebase';
+
 
 class AddTodo extends Component {
     constructor(props) {
@@ -8,7 +10,8 @@ class AddTodo extends Component {
             id : '',
             job : '',
             note : '',
-            priority : 'low'
+            priority : 'low',
+            completed : false
         }
     }
 
@@ -22,22 +25,26 @@ class AddTodo extends Component {
 
     btnAddClick = () => {
         let item = {
-            id : '',
             job : this.state.job,
             note : this.state.note,
-            priority : this.state.priority
+            priority : this.state.priority,
+            completed : false
         }
 
         // gui du lieu lai len app
         this.props.btnAddTodoClick(item);
 
+        // gui du lieu len firebase
+        let db = database.ref('Notes/');
+        db.push(item);
 
         // clear state
         this.setState({
             id : '',
             job : '',
             note : '',
-            priority : ''
+            priority : '',
+            completed : false
         })
 
         this.props.toggleAddDialog();

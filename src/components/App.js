@@ -7,37 +7,38 @@ import TodoList from './TodoList';
 import AddTodo from './AddTodo';
 import EditTodo from './EditTodo';
 
+import {database} from './Firebase';
+
 class App extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			todos: [{
-				id: '1',
-				job: 'Mua com',
-				priority: 'hight',
-				note: 'Hoan thanh truoc 5h chieu',
-				completed : false
-			},
-			{
-				id: '2',
-				job: 'Di choi',
-				priority: 'low',
-				note: '',
-				completed : true
-			},
-			{
-				id: '3',
-				job: 'Di hoc',
-				priority: 'medium',
-				note: '',
-				completed : false
-			}],
+			todos: [],
 
 			isAddTodo: false,
 
 			isEditTodo: false
 		}
+	}
+
+	reUpdateDatabase = () => {
+		let db = database.ref('Notes/');
+		db.on('value', notes => {
+			let arrayData = [];
+			notes.forEach(element => {
+				const key = element.key;
+				const val = element.val();
+				
+				let item = {...val, id : key};
+
+				arrayData.push(item);
+			});
+
+			this.setState({
+				todos : arrayData
+			})
+		})
 	}
 
 	dim_screen = () => {
@@ -96,8 +97,18 @@ class App extends Component {
 
 	getEditData = (item) => {
 		// gui du lieu ve server
-		console.log(item);
+		let db = database.ref('Notes/' );
 
+		let child = db.child(item.id);
+
+		child.update({
+			job : item.job,
+			note : item.note,
+			priority : item.priority,
+			completed : item.completed
+		});
+
+		// cap nhat state
 		let arrayData = [...this.state.todos];
 
 		arrayData.map((value, key) => {
@@ -118,19 +129,31 @@ class App extends Component {
 
 	btnRemoveClick = (id) => {
 		// gui du lieu ve server
+		console.log(id);
+		let db = database.ref('Notes/');
+
+		db.child(id).remove();
+		// cap nhat state
 		this.setState({
 			todos: this.state.todos.filter((value) => value.id !== id)
 		})
 	}
 
 	// ======================= COMPLETED TODO ===========================
-	todoClick = (id) => {
-		console.log(id);
+	todoClick = (item) => {
 
+		// gui du lieu
+		let child = database.ref('Notes/' + item.id);
+
+		child.update({
+			completed : item.completed
+		})
+
+		// cap nhat state
 		let arrayData = [...this.state.todos];
 
 		arrayData.map((value, key) => {
-			if (value.id === id)
+			if (value.id === item.id)
 			{
 				value.completed = !value.completed;
 			}
@@ -142,7 +165,13 @@ class App extends Component {
 	}
 
 	// =============================== RENDER ===========================
+	
+	componentWillMount() {
+		this.reUpdateDatabase();
+	}
+	
 	render() {
+		// this.reUpdateDatabase();
 		return (
 			<div className="App">
 
@@ -158,7 +187,7 @@ class App extends Component {
 
 					{/* comp todos list */}
 					<TodoList data={this.state.todos} btnEditClick={(id) => this.btnEditClick(id)}
-						btnRemoveClick={(id) => this.btnRemoveClick(id)} todoClick={(id) => this.todoClick(id)}/>
+						btnRemoveClick={(id) => this.btnRemoveClick(id)} todoClick={(item) => this.todoClick(item)}/>
 
 					{
 						this.renderDialogAdd()

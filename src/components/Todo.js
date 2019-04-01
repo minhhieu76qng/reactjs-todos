@@ -15,12 +15,18 @@ class Todo extends Component {
     }
 
     todoClick = () => {
-        let id = this.props.data.id;
-        this.props.todoClick(id);
+        let item = {
+            id : this.props.data.id,
+            job : this.props.data.job,
+            note : this.props.data.note,
+            priority : this.props.data.priority,
+            completed : !this.props.data.completed,
+        }
+        this.props.todoClick(item);
     }
 
     render() {
-        console.log(this.props.data);
+        // console.log(this.props.data);
         return (
             <tr onClick={() => this.todoClick()} className={this.props.data.completed === true ? "completed" : ""}>
                 <td>{this.props.index + 1}</td>

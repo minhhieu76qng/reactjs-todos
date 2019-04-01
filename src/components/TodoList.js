@@ -10,8 +10,8 @@ class TodoList extends Component {
         this.props.btnRemoveClick(id);
     }
 
-    todoClick = (id) => {
-		this.props.todoClick(id);
+    todoClick = (item) => {
+		this.props.todoClick(item);
 	}
 
     render() {
@@ -43,7 +43,7 @@ class TodoList extends Component {
                                 data={value}
                                 btnEditClick={(id) => this.btnEditClick(id)}
                                 btnRemoveClick={(id) => this.btnRemoveClick(id)}
-                                todoClick={(id) => this.todoClick(id)}/>)
+                                todoClick={(item) => this.todoClick(item)}/>)
                     }
                 </tbody>
             </table>
