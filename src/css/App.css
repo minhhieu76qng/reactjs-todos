@@ -103,10 +103,10 @@ body {
   display: block;
   z-index: 1000;
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: -999999;
+  left: -999999;
+  right: -999999;
+  bottom: -999999;
   background-color: #000;
   opacity: .6;
 }
