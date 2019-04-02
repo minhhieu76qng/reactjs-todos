@@ -31,6 +31,24 @@ class AddTodo extends Component {
             completed : false
         }
 
+        // kiem tra tinh hop le cua du lieu
+        if (item.job.length === 0 || item.note.length === 0)
+        {
+            // gui message loi ve app.
+            // type : danger
+            // headline : error
+            // message : You must fill all fields
+
+            this.props.alert({
+                type : 'danger',
+                headline : 'Error',
+                message : 'You must fill all fields!'
+            })
+
+            // return;
+            return;
+        }
+
         // gui du lieu lai len app
         this.props.btnAddTodoClick(item);
 
@@ -45,6 +63,13 @@ class AddTodo extends Component {
             note : '',
             priority : '',
             completed : false
+        })
+
+        // thong bao thanh cong
+        this.props.alert({
+            type : 'success',
+            headline : 'Success',
+            message : 'Add success!'
         })
 
         this.props.toggleAddDialog();

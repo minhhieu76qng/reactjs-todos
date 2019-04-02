@@ -8,6 +8,7 @@ import AddTodo from './AddTodo';
 import EditTodo from './EditTodo';
 
 import {database} from './Firebase';
+import Notifier from './Notifier';
 
 class App extends Component {
 	constructor(props) {
@@ -18,7 +19,9 @@ class App extends Component {
 
 			isAddTodo: false,
 
-			isEditTodo: false
+			isEditTodo: false,
+
+			alert : null,
 		}
 	}
 
@@ -61,7 +64,7 @@ class App extends Component {
 
 	renderDialogAdd = () => {
 		if (this.state.isAddTodo === true) {
-			return <AddTodo btnAddTodoClick={(item) => this.btnAddTodoClick(item)} toggleAddDialog={() => this.toggleAddDialog()} />;
+			return <AddTodo alert={(alert) => this.getAlert(alert)} btnAddTodoClick={(item) => this.btnAddTodoClick(item)} toggleAddDialog={() => this.toggleAddDialog()} />;
 		}
 	}
 
@@ -164,6 +167,26 @@ class App extends Component {
 		})
 	}
 
+	// =============================== ALERT LIST =======================
+
+	getAlert = (alert) => {
+		console.log(alert);
+		this.setState({
+			alert : alert
+		})
+	}
+
+	renderAlert = () => {
+		// console.log(this.state.alert);
+		if (this.state.alert === null)
+		{
+			// khong lam gi
+		}
+		else{
+			return <Notifier getAlert={(alert) => this.getAlert(alert)} alert={this.state.alert}/>
+		}
+	}
+
 	// =============================== RENDER ===========================
 	
 	componentWillMount() {
@@ -196,7 +219,16 @@ class App extends Component {
 					{
 						this.renderDialogEdit()
 					}
+
+					
 				</div>
+
+				<div className={"notifier " + (this.state.alert === null ? "" : "active")}>
+				{
+					this.renderAlert()
+				}	
+				</div>
+				
 			</div>
 		);
 	}

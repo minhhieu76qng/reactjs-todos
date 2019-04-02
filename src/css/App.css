@@ -125,3 +125,15 @@ body {
 tr.completed td {
   text-decoration: line-through;
 }
+
+.notifier{
+  position: absolute;
+  top: 50px;
+  right: -50px;
+  translate: all .3s ease;
+  min-width: 200px;
+}
+
+.notifier.active{
+  right: 10px;
+}
