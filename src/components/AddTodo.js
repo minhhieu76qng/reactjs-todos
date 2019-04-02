@@ -52,26 +52,6 @@ class AddTodo extends Component {
         // gui du lieu lai len app
         this.props.btnAddTodoClick(item);
 
-        // gui du lieu len firebase
-        let db = database.ref('Notes/');
-        db.push(item);
-
-        // clear state
-        this.setState({
-            id : '',
-            job : '',
-            note : '',
-            priority : '',
-            completed : false
-        })
-
-        // thong bao thanh cong
-        this.props.alert({
-            type : 'success',
-            headline : 'Success',
-            message : 'Add success!'
-        })
-
         this.props.toggleAddDialog();
     }
     

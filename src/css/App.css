@@ -127,13 +127,7 @@ tr.completed td {
 }
 
 .notifier{
-  position: absolute;
+  position: fixed;
   top: 50px;
-  right: -50px;
-  translate: all .3s ease;
-  min-width: 200px;
-}
-
-.notifier.active{
-  right: 10px;
+  right: 20px;
 }

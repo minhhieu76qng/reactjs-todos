@@ -60,6 +60,18 @@ class App extends Component {
 		this.setState({
 			todos: [...this.state.todos, item]
 		})
+
+		// gui du lieu len firebase
+        let db = database.ref('Notes/');
+        db.push(item);
+
+        // thong bao thanh cong
+        this.getAlert({
+            type : 'success',
+            headline : 'Success',
+            message : 'Add success!'
+		})
+		
 	}
 
 	renderDialogAdd = () => {
@@ -95,7 +107,6 @@ class App extends Component {
 		});
 
 		this.toggleEditDialog();
-
 	}
 
 	getEditData = (item) => {
@@ -126,19 +137,33 @@ class App extends Component {
 		this.setState({
 			todos : arrayData
 		})
+
+		// thong bao thanh cong
+        this.getAlert({
+            type : 'success',
+            headline : 'Success',
+            message : 'Edit success!'
+		})
 	}
 
 	// ========================== REMOVE TODO =============================
 
 	btnRemoveClick = (id) => {
 		// gui du lieu ve server
-		console.log(id);
+		// console.log(id);
 		let db = database.ref('Notes/');
 
 		db.child(id).remove();
 		// cap nhat state
 		this.setState({
 			todos: this.state.todos.filter((value) => value.id !== id)
+		})
+
+		// thong bao thanh cong
+        this.getAlert({
+            type : 'success',
+            headline : 'Success',
+            message : 'Remove success!'
 		})
 	}
 
@@ -165,12 +190,18 @@ class App extends Component {
 		this.setState({
 			todos : arrayData
 		})
+
+		// thong bao thanh cong
+        this.getAlert({
+            type : 'success',
+            headline : 'Success',
+            message : 'Edit success!'
+		})
 	}
 
 	// =============================== ALERT LIST =======================
 
 	getAlert = (alert) => {
-		console.log(alert);
 		this.setState({
 			alert : alert
 		})
@@ -223,7 +254,7 @@ class App extends Component {
 					
 				</div>
 
-				<div className={"notifier " + (this.state.alert === null ? "" : "active")}>
+				<div className="notifier">
 				{
 					this.renderAlert()
 				}	
