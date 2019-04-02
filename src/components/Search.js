@@ -22,8 +22,8 @@ export default class Search extends Component {
     }
 
     btnSearchClick = (event) => {
-        event.preventDefault();
         this.props.btnSearchClick(this.state.searchValue);
+        event.preventDefault();
     }
 
     btnAddClick = () => {
@@ -39,9 +39,9 @@ export default class Search extends Component {
                 <form className="form-search">
                     <div className="search-box">
                         <div className="wrapper">
-                            <input value={this.searchValue} onChange={(event) => this.isChanged(event)} type="search" placeholder="Search"/>
+                            <input value={this.searchValue} onChange={(event) => this.isChanged(event)} type="search" placeholder="Search..."/>
                         </div>
-                        <button onSubmit={() => {return false}} onClick={(event) => this.btnSearchClick(event)} className="btn btn-outline-success ml-2">Search</button>
+                        {/* <button onClick={(event) => this.btnSearchClick(event)} className="btn btn-outline-success ml-2">Search</button> */}
                     </div>
                 </form>
             </div>

@@ -23,7 +23,12 @@ class App extends Component {
 
 			alert : null,
 
-			search : ''
+			search : '',
+
+			sortByPriority : {
+				status : false,
+				type : true		// toggle true -> search theo thứ tự từ low -> high. và ngược lại
+			}
 		}
 	}
 
@@ -227,6 +232,23 @@ class App extends Component {
 		});
 	}
 
+	// ============================== SORT =============================
+
+	toggleSort = () => {
+		// console.log(sortValue);
+		let temp = this.state.sortByPriority;
+
+		temp.status = !temp.status;
+
+		if (temp.status === true)
+		{
+			temp.type = !temp.type;
+		}
+		this.setState({
+			sortByPriority : temp
+		})
+	}
+
 	// =============================== RENDER ===========================
 	
 	componentWillMount() {
@@ -242,13 +264,28 @@ class App extends Component {
 		}
 		else
 		{
-			arrayData = this.state.todos;
+			arrayData = [...this.state.todos];
 		}
+		console.log(this.state.todos);
+
+		// xu li sort
+		if (this.state.sortByPriority.status === true)
+		{
+			arrayData.sort((a, b) => {
+				if (this.state.sortByPriority.type === true)
+					return parseInt(a.priority) - parseInt(b.priority);
+				else
+					return -(parseInt(a.priority) - parseInt(b.priority));
+			})
+		}
+		
+		console.log('changed');
+		
+
 		return (
 			<div className="App">
 
 				<div id={"dim-screen" + this.dim_screen()}></div>
-
 
 				{/* comp header */}
 				<Header />
@@ -258,8 +295,13 @@ class App extends Component {
 					<Search btnAddClick={() => this.toggleAddDialog()} btnSearchClick={(searchValue) => this.btnSearchClick(searchValue)}/>
 
 					{/* comp todos list */}
-					<TodoList data={arrayData} btnEditClick={(id) => this.btnEditClick(id)}
-						btnRemoveClick={(id) => this.btnRemoveClick(id)} todoClick={(item) => this.todoClick(item)}/>
+					<TodoList 
+						data={arrayData} 
+						btnEditClick={(id) => this.btnEditClick(id)}
+						btnRemoveClick={(id) => this.btnRemoveClick(id)} 
+						todoClick={(item) => this.todoClick(item)}
+						sort={this.state.sortByPriority}
+						toggleSort={() => this.toggleSort()}/>
 
 					{
 						this.renderDialogAdd()

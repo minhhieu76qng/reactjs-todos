@@ -24,16 +24,21 @@ class Todo extends Component {
         }
         this.props.todoClick(item);
     }
-
+    
     render() {
-        // console.log(this.props.data);
+        console.log('mount');
+        let priorityArray = ['low', 'medium', 'hight'];
+        
+        let priorityText = priorityArray[parseInt(this.props.data.priority) - 1];
+
         return (
             <tr onClick={() => this.todoClick()} className={this.props.data.completed === true ? "completed" : ""}>
                 <td>{this.props.index + 1}</td>
                 <td>{this.props.data.job}</td>
                 <td>{this.props.data.note}</td>
                 <td>
-                    <div className={"priority " + this.props.data.priority}>{this.props.data.priority[0].toUpperCase() + this.props.data.priority.substring(1, this.props.data.priority.lenght)}</div>
+                    <div className={"priority " + priorityText}>{priorityText[0].toUpperCase() + priorityText.substring(1, priorityText.lenght)}</div>
+                    {/* <div>{this.props.data.priority}</div> */}
                 </td>
                 <td>
                     <div className="form-group mb-0">

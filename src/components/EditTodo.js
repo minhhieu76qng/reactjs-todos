@@ -48,9 +48,9 @@ class EditTodo extends Component {
                 <div className="form-group">
                     <label htmlFor="priority" >Priority:</label>
                     <select value={this.state.priority} onChange={(event) => this.isChanged(event)} className="form-control" name="priority">
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="hight">Hight</option>
+                        <option value="1">Low</option>
+                        <option value="2">Medium</option>
+                        <option value="3">Hight</option>
                     </select>
                 </div>
                 <div className="form-group text-center mb-0">
