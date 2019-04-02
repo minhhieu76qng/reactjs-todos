@@ -1,6 +1,31 @@
 import React, { Component } from 'react';
 
 export default class Search extends Component {
+
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            searchValue : ''
+        }
+    }
+    
+    isChanged = (event) => {
+
+        const value = event.target.value;
+
+        this.props.btnSearchClick(value);
+
+        this.setState({
+            searchValue : value
+        })
+    }
+
+    btnSearchClick = (event) => {
+        event.preventDefault();
+        this.props.btnSearchClick(this.state.searchValue);
+    }
+
     btnAddClick = () => {
         this.props.btnAddClick();
     }
@@ -14,9 +39,9 @@ export default class Search extends Component {
                 <form className="form-search">
                     <div className="search-box">
                         <div className="wrapper">
-                            <input type="search" placeholder="Search"/>
+                            <input value={this.searchValue} onChange={(event) => this.isChanged(event)} type="search" placeholder="Search"/>
                         </div>
-                        <button className="btn btn-outline-success ml-2">Search</button>
+                        <button onSubmit={() => {return false}} onClick={(event) => this.btnSearchClick(event)} className="btn btn-outline-success ml-2">Search</button>
                     </div>
                 </form>
             </div>

@@ -22,6 +22,8 @@ class App extends Component {
 			isEditTodo: false,
 
 			alert : null,
+
+			search : ''
 		}
 	}
 
@@ -218,6 +220,13 @@ class App extends Component {
 		}
 	}
 
+	// =============================== SEARCH ===========================
+	btnSearchClick = (value) => {
+		this.setState({
+			search : value
+		});
+	}
+
 	// =============================== RENDER ===========================
 	
 	componentWillMount() {
@@ -225,7 +234,16 @@ class App extends Component {
 	}
 	
 	render() {
-		// this.reUpdateDatabase();
+		let arrayData = [];
+		// xu li du lieu khi search
+		if (this.state.search !== '')
+		{
+			arrayData = this.state.todos.filter((value) => value.job.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1);
+		}
+		else
+		{
+			arrayData = this.state.todos;
+		}
 		return (
 			<div className="App">
 
@@ -237,10 +255,10 @@ class App extends Component {
 
 				<div className="container">
 					{/* comp search  and sort */}
-					<Search btnAddClick={() => this.toggleAddDialog()} />
+					<Search btnAddClick={() => this.toggleAddDialog()} btnSearchClick={(searchValue) => this.btnSearchClick(searchValue)}/>
 
 					{/* comp todos list */}
-					<TodoList data={this.state.todos} btnEditClick={(id) => this.btnEditClick(id)}
+					<TodoList data={arrayData} btnEditClick={(id) => this.btnEditClick(id)}
 						btnRemoveClick={(id) => this.btnRemoveClick(id)} todoClick={(item) => this.todoClick(item)}/>
 
 					{
@@ -251,7 +269,6 @@ class App extends Component {
 						this.renderDialogEdit()
 					}
 
-					
 				</div>
 
 				<div className="notifier">
